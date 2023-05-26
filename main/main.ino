@@ -4,14 +4,35 @@
 #define TOLERANCE 100
 #define NUM_READS_FOR_AVERAGE 5
 
-#define NUM_ANALOG_PINS 3
-uint8_t ANALOG_PINS[] = {A0, A3, A5};
+#define NUM_ANALOG_PINS 5
+uint8_t ANALOG_PINS[] = {A0, A1, A2, A3, A4};
 
 #define TONE_PIN 8
-#define NUM_NOTES 7
-#define EIGHTH_NOTE_DURATION 100
-int NOTES[] = {NOTE_G4, NOTE_G4, NOTE_GS4, NOTE_AS4, NOTE_F4, 0, NOTE_F4};
-int NOTE_DURATIONS[] = {1, 2, 1, 2, 2, 1, 3};
+#define NUM_NOTES 41
+#define EIGHTH_NOTE_DURATION 60
+int NOTES[] = {
+  /*
+  NOTE_DS4, NOTE_DS4, NOTE_DS4, NOTE_DS4, NOTE_DS4, NOTE_DS4, NOTE_DS4, NOTE_DS4,
+  */
+  NOTE_DS4, 0,        0,        NOTE_G4,  NOTE_G4,  NOTE_GS4, NOTE_AS4, NOTE_F4, 
+  0,        NOTE_F4,            NOTE_DS5,
+  0,        0,        0,        NOTE_G4,  NOTE_G4,  NOTE_GS4, NOTE_AS4, NOTE_DS4,
+            0,                            NOTE_FS5, NOTE_DS5, NOTE_F5,  NOTE_DS5,
+  0,                                      NOTE_G4,  NOTE_GS4, NOTE_AS4, NOTE_C5,
+  0,        NOTE_G4,            0,
+  0,        NOTE_G4,  NOTE_G4,  NOTE_G4,  0,        NOTE_D5,  0,        NOTE_F4,
+  NOTE_AS4,
+};
+int NOTE_DURATIONS[] = {
+  2,        1,        2,        1,        2,        1,        2,        1,
+  2,        4,                  6,
+  2,        1,        2,        1,        2,        1,        2,        3,
+            4,                            2,        1,        2,        1,
+  6,                                      2,        1,        2,        1,
+  2,        3,                  7,
+  2,        1,        2,        1,        2,        1,        2,        1,
+  6,
+};
 #define PAUSE_FACTOR 1.3
 
 uint16_t initialLevels[NUM_ANALOG_PINS];
@@ -79,10 +100,11 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
+  log();
+
   if (isLaserTripped()) {
     playAlarm();
   }
 
-  log();
   delay(100);
 }
